@@ -15,7 +15,7 @@ public static void main(String[] args) throws IOException {
     타입이 int인 T를 입력받는다.
 
     for 반복문으로 다음을 반복한다. (int i <- 0~T-1) // 테스트 케이스 T번 만큼 반복
-        sb.append(값) // sb뒤에 값 붙인다. 값은 s[Integer.parseInt(br.readLine())] : 즉, N
+        sb.append(값) // sb뒤에 값 붙인다. 값은 s[Integer.parseInt(br.readLine())] : 즉, N / .append('\n') 사용해 개행문자 추가
 
     sb를 출력한다.
 
