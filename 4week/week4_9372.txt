@@ -1,0 +1,36 @@
+1. 문제 해결 기법
+    - 주어진 비행 스케줄에서 모든 국가를 여행할 수 있는 최소 비행기 종류를 구한다. (이미 방문한 국가도 다시 거쳐갈 수 있다.) 
+    비행 스케줄은 항상 연결 그래프를 이룬다는 조건이 있다. 즉, 비행기의 종류의 최소 개수는 국가 수보다 1 작다.
+    따라서 최소 신장 트리(그래프에서 일부 간선 선택해 만든 트리)를 활용하여 문제를 해결한다.
+
+2. 논리 구현
+int 타입의 N, M을 정의한다. (private static int N, M) // 국가의 수 : N, 비행기 종류 : M
+ArrayList<Integer>[] flight를 정의한다. // 비행기 스케줄 저장할 ArrayList
+
+// main
+    버퍼리더 br을 선언한다.
+    읽어온 것을 토큰으로 나누기 위해 StringTokenizer st를 선언한다.
+    읽어온 것을 더하기 위해 StringBuilder sb를 선언한다.
+
+    타입이 int인 T (테스트 개수)를 br.readLine()으로 읽는다.
+
+    while문으로 다음을 실행한다. (T-- > 0)
+        st = new StringTokenizer(br.readLine())
+        N을 토큰으로 받아온다.
+        M을 토큰으로 받아온다.
+        flight의 크기를 N+1로 지정한다. // ArrayList[N+1]
+
+        for 반복문으로 다음을 반복한다. (int i <- 0~N)
+            flight[i] = new ArrayList<>();
+        
+        for 반복문으로 다음을 반복한다. (int i <- 0~M-1)    // a,b 왕복하는 비행기 정보 배열리스트에 넣음
+            st = new StringTokenizer(br.readLine())
+            타입이 int인 a를 토큰으로 입력 받는다.
+            타입이 int인 b를 토큰으로 입력 받는다.
+
+            flight[a].add(b)    // a와 b를 왕복하는 비행기 즉, a에서는 b로 이동
+            flight[b].add(a)    // b에서는 a로 이동
+        
+        sb.append((N-1) + "\n")     // 비행기 종류의 최소 개수는 국가의 개수보다 1 작다.
+    
+    sb를 출력한다.
