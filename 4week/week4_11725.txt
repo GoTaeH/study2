@@ -1,0 +1,37 @@
+1. 문제 해결 기법
+    - 트리의 루트를 1이라고 가정 했을 때의 각 노드의 부모를 구하는 문제이다. 
+    노드 개수 N을 입력 받고 N-1번 만큼 연결된 두 정점을 입력 받는다. 2번 노드부터 부모 노드 번호를 구해야 한다.
+    따라서 생성한 트리에서 dfs(깊이 우선 탐색)를 통해 부모 노드를 구할 수 있다.
+
+2. 논리 구현
+static int N을 선언한다. // 노드 개수 N
+static boolean타입의 1차원 배열 visit을 선언한다. // 방문 유무
+static ArrayList<Integer>[] tree를 선언한다. // 트리 배열 생성
+static int타입의 1차원 배열 parent를 선언한다. // 부모 노드
+
+// main
+    Scanner sc를 선언한다.
+    N을 sc로 입력 받는다.
+    visit을 크기 N + 1로 초기화한다.
+    tree를 크기 N + 1로 초기화한다.
+    parent를 크기 N + 1로 초기화한다.
+
+    for 반복문으로 다음을 반복한다. (int i <- 0~tree.length-1)
+        tree[i] = new ArrayList<>()     // 트리의 길이만큼 배열 생성
+    for 반복문으로 다음을 반복한다. (int i <- 1~N-1)
+        int a를 sc로 입력받는다.
+        int b를 sc로 입력받는다.
+        tree[a].add(b)  // a와 b 연결
+        tree[b].add(a)  // b와 a 연결
+    
+    dfs(1)  // 트리의 루트는 1
+    for 반복문으로 다음을 반복한다. (int i <- 2~N)
+        2번 노드부터 부모 노드를 출력한다. // parent[i]
+
+// dfs 구현
+static void dfs(int v)
+    visit[v]를 true로 초기화한다.
+    for 반복문으로 다음을 반복한다. (int i : tree[v]) // 향상된 for 문
+        if(!visit[i])   // 노드 i를 방문하는 것은 부모 노드를 방문한다는 의미
+            i의 부모노드는 v이다. // parent[i] = v
+            dfs(i)
