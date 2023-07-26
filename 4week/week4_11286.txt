@@ -1,0 +1,28 @@
+1. 문제 해결 기법
+    - 절대값 힙을 구현하는 문제이다. x가 0이 아닐 때는 배열에 정수를 넣고, x가 0일 때는 절댓값이 가장 작은 값을 출력한다. 
+    따라서 우선순위를 가지고 각 정수를 비교해야 하므로 우선순위 큐를 활용하여 문제를 해결한다.
+
+2. 논리 구현
+버퍼리더 br을 선언한다.
+타입이 int 인 N을 br로 읽는다. (연산 개수 N)
+우선순위 큐를 Integer타입으로 선언한다. // PriorityQueue<Integer> queue, 저장할 객체를 Comparator로 구현
+    public int compare(Integer a1, Integer a2) // 비교 연산
+        if(a1 절댓값 > a2 절댓값)
+            return a1 절댓값 - a2 절댓값
+        else if(a1 절댓값 == a2 절댓값)
+            return a1 - a2
+        else
+            return -1
+
+StringBuilder sb를 선언한다.
+for 반복문으로 다음을 반복한다. (int i <- 0~N-1)
+    int x를 br로 입력 받는다. // 연산 정보 나타내는 정수 x
+    if(x == 0)
+        if(queue.isEmpty()) // 우선 순위 큐가 비었을 때
+            sb에 0을 넣고, \n을 넣는다. // append 사용
+        else    // 비어있지 않다면
+            sb에 queue의 첫번째 값을 반환하고, \n을 넣는다.     // queue.poll()
+    else
+        queue.offer(x)  // queue에 x를 넣는다.
+    
+sb를 출력한다.
