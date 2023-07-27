@@ -1,0 +1,41 @@
+1. 문제 해결 기법
+    - 두명이 차례대로 돌아가면서 게임을 진행 하는데, 점 n개중 두개를 선택하여 선분을 긋고 사이클을 완성하는 순간 끝나는 게임이다. 
+    // 사이클 조건 : 사이클 C에 속한 임의의 선분의 한 끝점에서 출발하여 모든 선분을 한 번씩만 지나서 출발점으로 되돌아 올 수 있다.
+    부모를 찾아서(find) 같은 부모를 갖도록(union) 만들어야 사이클이 완성 되기 때문에 유니온 파인드를 사용해야 한다. 
+
+2. 논리 구현
+static int[] parent를 선언한다.     // 부모 노드
+static int result를 선언한다.
+static int n, m을 선언한다.     // 점 개수 n, 차례 수 m
+
+// main
+    버퍼리더 br을 선언한다.
+    StringTokenizer st를 선언한다.
+
+    n을 입력 받는다.
+    m을 입력 받는다.
+
+    parent를 배열 크기 n으로 선언한다.
+    for 반복문으로 다음을 반복한다. (int i <- 0~n-1)
+        parent[i] = i   // 부모노드에 넣는다.
+    
+    for 반복문으로 다음을 반복한다. (int i <- 1~m)
+        st = new StringTokenizer(br.readLine())
+        int a를 입력받는다.
+        int b를 입력받는다.
+        if(!union(a, b))
+            result = i
+            break
+    result + "\n"을 출력한다.
+
+private static int find(int x)  // x 부모 찾는 find
+    if(x == parent[x])
+        return x
+    return parent[x] = find(parent[x])
+private static boolean union(int x, int y)  // y 부모는 x 부모
+    x = find(x)
+    y = find(y)
+    if(x == y)  // x와 y가 같다면
+        return false
+    parent[y] = x // y부모를 x로 정의
+    return true
