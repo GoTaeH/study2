@@ -1,0 +1,45 @@
+1. 문제 해결 기법
+    - 트리에서 어떤 두 노드를 선택해서 당길 때, 가장 길게 늘어나는 경로의 길이(트리의 지름)를 구하는 문제이다. 
+    n개의 노드를 입력 받아 부모노드번호, 자식노드번호, 간선의 가중치를 통해 트리를 형성한다. 
+    트리의 지름을 구하기 위해서 dfs를 통해 해결한다. // 트리는 리스트로 표현
+
+2. 논리 구현
+static int N    // 노드 개수 N
+static int result     // 결과
+static ArrayList<Node> list[]   // ArrayList의 Object를 Node(클래스)로 선언
+static boolean[] visit  // 방문 여부
+static class Node {
+    int num, cost;
+    public Node(int num, int cost) {
+        this.num = num
+        this.cost = cost
+    }
+}
+// main
+    버퍼리더 br을 선언한다.
+    StringTokenizer st를 선언한다.
+    N을 br로 입력 받는다.
+    list의 크기를 N+1로 설정한다.
+
+    for 반복문으로 다음을 반복한다. (int i <- 0~list.length)
+        list[i]에 새로운 ArrayList를 생성한다.
+    for 반복문으로 다음을 반복한다. (int i <- 1~N-1)
+        st = StringTokenizer(br.readLine())
+        타입이 int인 a를 입력 받는다.   // 부모 노드
+        타입이 int인 b를 입력 받는다.   // 자식 노드
+        타입이 int인 cost를 입력 받는다.    // 간선의 가중치
+        list[a]에 Node(b, cost)를 넣는다.
+        list[b]에 Node(a, cost)를 넣는다.
+        // 트리 만드는 과정 (부모노드와 자식노드 연결, 가중치 값 추가)
+    for 반복문으로 다음을 반복한다. (int i <- 0~N-1)
+        visit의 배열 크기를 N+1로 설정한다.
+        visit[i] = true  // visit을 true로 초기화
+        dfs(i, 0)
+    result를 출력한다.
+
+// public static void dfs(int number, int value)
+    for 반복문으로 다음을 반복한다. (Node node : list[number])
+        if(!visit[node.num])    // 인접한 노드가 방문한 적이 없다면
+            visit[node.num] = true
+            dfs(node.num, value + node.cost) 
+    result = Math.max(result, value)    // 가장 큰 값으로 선택 (지름)
