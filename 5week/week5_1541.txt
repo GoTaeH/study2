@@ -1,0 +1,20 @@
+1. 문제 해결 기법
+    - 양수, +, -, 괄호를 가지고 만든 식에서 괄호를 모두 지우고 괄호를 적절히 이용하여 식의 값을 최소로 만드려는 
+    문제이다. 즉, 입력 받은 식을 계산했을 때 최소 값을 구하는 문제이다.  따라서 이 문제는 
+    각 단계에서 최선의 선택을 하는 그리디 알고리즘을 활용하여 해결해야 한다.
+
+2. 논리 구현
+버퍼리더 br을 선언한다.
+-를 기준으로 br.readLine()으로 입력받은 내용을 토큰으로 만든다. // st1
+타입이 int인 res(result)를 Integer.MAX_VALUE;로 정의한다. 
+while문으로 다음을 반복한다. (st1.hasMoreToken()) 
+    int temp를 0으로 정의한다.
+    +를 기준으로 분리하는 st2를 선언한다.
+
+    while문으로 다음을 반복한다. (st2.hasMoreToken())
+        temp += Integer.parsInt(st2.nextToken())    // 첫 수는 무조건 +
+    if(res == Integer.MAX_VALUE)
+        res = temp
+    else 
+        res -= temp     // -로 토큰을 나눴으니 -해주어야 한다.
+res를 출력한다.
