@@ -1,0 +1,34 @@
+1. 문제 해결 기법
+    - 이진 검색 트리를 전위 순회한 결과가 주어지면 후위 순회한 결과를 구하는 문제이다. 이 문제는 문제 그대로 
+    트리의 순회를 이용하여 해결해야 한다.
+
+2. 논리 구현
+static class Node를 구현한다.
+    int data, Node left,right를 선언한다.
+    Node(int data) this.data = data
+    void insert(int data)   // 입력 받은 수 삽입하기 위함
+        if(this.data > data)    // 삽입 노드가 현재 노드보다 크다면
+            if(this.left == null)   // left가 null이라면
+                this.left = new Node(data)  //새로운 노드로 추가
+            else this.left.insert(data)     // 왼쪽에 삽입
+        else
+            if(this.right == null)  // right가 null이라면
+                this.right = new Node(data)     // 새로운 노드로 추가
+            else this.right.insert(data)    // 오른쪽에 삽입
+// main
+버퍼리더 br을 선언한다.
+Node root를 br.readLine()으로 받아온다. // 루트 노드
+
+while(true)     // 루트 제외 하위 노드
+    String 타입의 pre(preorder : 전위순회)를 br.readLine()으로 받아온다.
+    if(pre == null || pre.equals("")) break     // pre가 null이거나 ""이라면 break
+    int input을 pre로 정의한다.
+    root.insert(input)  // root에 input을 삽입한다.
+post(root)
+
+// private static void post(Node node)
+    if(node.left != null)   // 노드의 왼쪽이 비어있지 않다면
+        post(node.left)
+    if(node.right != null)  // 노드의 오른쪽이 비어있지 않다면
+        post(node.right)
+    node.data를 출력한다.
