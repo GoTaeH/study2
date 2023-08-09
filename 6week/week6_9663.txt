@@ -1,0 +1,30 @@
+1. 문제 해결 기법
+    - 전형적인 N-Queen 문제로 크기가 N X M인 체스판 위에 퀸 N개를 서로 공격하지 못하게 
+    놓는 문제이다. 따라서 nQueen을 구현하고, 공격할 수 없는 경우를 구하는 코드를 구현하여 
+    퀸을 놓는 방법의 수를 구해야 한다. (백트래킹)
+
+2. 논리 구현
+public static int[] arr, int N, int cnt = 0을 선언한다.
+// main
+버퍼리더 br을 선언한다.
+N을 br.readLine()으로 읽는다.
+1차원 int배열 arr을 크기 N으로 정의한다.
+nQueen(0); // 첫번째 위치 (배열이 0부터 시작)
+cnt를 출력한다. // 경우의수 count
+
+// public static void nQueen(int d) <- d = depth
+if(d == N)  // 체스판을 모두 채운 생태 : cnt 증가, return
+    cnt++
+    return
+for 반복문으로 다음을 반복한다. (int i <- 0~N-1)
+    arr[d] = i;
+    if(noAttack(d)) {   // 놓을 수 있는 위치 일 때
+        nQueen(d + 1)
+    }
+//public static boolean noAttack(int col)
+for 반복문으로 다음을 반복한다. (int i <- 0~col-1)
+    if(같은 행에 존재한다면)
+        return false
+    else if(대각선상에 존재한다면)  // 열의 차이와 행의 차이 같은지 비교
+        return false
+return true
