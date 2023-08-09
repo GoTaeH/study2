@@ -1,0 +1,51 @@
+1. 문제 해결 기법
+    - 격자 모양 상자의 칸에 토마토를 하나씩 넣어 창고에 보관하는데 안 익은 토마토가 인접한 토마토(상하좌우)가 익은 토마토라면 
+    영향을 받아 익게 된다. 즉, 며칠이 지나야(최소) 모든 토마토가 익는지를 구하는 문제이다. 
+    // 익은 토마토 : 1, 익지 않은 토마토 : 0, 들어있지 않은 칸 : -1
+    이 문제는 시작 하는 위치로 부터 인접한 위치를 먼저 방문해야하므로, 너비 우선 탐색을 사용해서 해결해야 한다. 
+
+2. 논리 구현
+static int N,M, int [][] board를 선언한다. // board : 토마토 담긴 상자
+static int[] dx = {1, -1, 0, 0} , int[] dy = {0, 0, 1, -1}// 상하좌우로 이동 가능한 배열
+static Queue<tomato> queue 생성 // LinkedList<tomato>()
+
+static class tomato 선언, int x, int y, int day 정의
+    public tomato(int x, int y, int day) // 생성자에서 현재 객체 지칭해서 정의 <- this.x = x ...
+
+// main
+버퍼리더 br을 선언한다.
+StringTokenizer st를 선언하여 br.readLine()으로 읽고 토큰으로 나눈다.
+
+M을 st.nextToken()으로 정의한다.
+N을 st.nextToken()으로 정의한다.
+board를 크기 N*M인 새로운 2차원 int 배열로 정의한다.
+
+for 반복문으로 다음을 반복한다. (int i <- 0~N-1) // 가로
+    st를 br.readLine() + " "로 재선언한다. // 입력 받을 때 한번에(ex:0 0 0 0 0 0) 입력받기 때문
+    for 반복문으로 다음을 반복한다. (int j <- 0~M-1) // 세로
+        board[i][j]에 st.nextToken() 값을 넣는다.
+        if(board[i][j]가 1이라면)   // 익은 토마토라면
+            queue.offer(new tomato(i,j,0))  // 큐에 익은 토마토의 값을 넣는다. 0은 day
+bfs를 실행한다.
+
+//public static void bfs()
+int day를 0으로 초기화한다.
+while(큐가 비어있지 않는 동안)
+    tomato t = queue.poll()     // 맨 앞 값 반환 후 삭제
+    day = t.day
+    for 반복문으로 다음을 반복한다. (int i <- 0~3)
+        int nx = t.x + dx[i]    // 이동한 새로운 위치 nx
+        int ny = t.x + dy[i]    // 이동한 새로운 위치 ny
+        if(nx, ny가 유효한 인덱스 범위 내에 있다면)
+            if(board[nx][ny] == 0)  // 위치의 토마토가 안익었다면
+                board[nx][ny] = 1   // 익은 토마토로 변경
+                queue.add(new tomato(nx, ny, day+1)) // 토마토 위치 큐에 추가 및 day+1
+if(checkTomato())  // 큐 비어지고, 토마토 전부 익게 만들었다면 다시 돌면서 
+    day출력, 익지 않았다면(else) -1 출력    // 익지 않은 토마토 없으면 day출력
+
+// static boolean checkTomato()
+    for 반복문으로 다음을 반복한다. (int i <- 0~N-1) // 가로
+        for 반복문으로 다음을 반복한다. (int j <- 1~M-1) //세로
+            if(i,j 위치의 상자에 있는 토마토가 익지 않았다면)
+                return false
+    return true // 상자를 다 체크 했는데 익지 않은 토마토가 없다면 true
