@@ -1,0 +1,43 @@
+1. 문제 해결 기법
+    - 그래프의 최소 스패닝 트리의 가중치를 구하는 문제이다. 이 문제는 프림과 크루스칼 방법으로 해결할 수 있다. 둘 중 프림을 
+    선택하여 문제를 해결한다. 정점의 개수가 V이고, 간선의 개수가 E, 간선의 가중치를 weight로 설정하여 해결한다.
+
+2. 논리 구현
+int result, List<Node>[] list, boolean[] visited 선언한다.
+객체간 순서를 비교하는 Comparable 인터페이스를 구현한다. // Node
+    상속받은 부모 생성자를 호출하는 메소드 super()를 선언한다.
+    this.to = to
+    this.weight = weight // 가중치
+@Override
+compareTo() 메서드 생성 // 객체 간 순서 비교
+    return this.weight - o.weight
+
+// main
+버퍼리더 br 선언한다.
+StringTokenizer st 선언하여 br.readLine()으로 입력받아 토큰으로 나눈다.
+int V, E를 토큰으로 정의한다.
+list와 visited의 크기를 V+1로 정의한다.
+for 반복문으로 다음을 반복한다. (int i <- 1~V)
+    list[i] = new ArrayList<>();
+for 반복문으로 다음을 반복한다. (int i <- 0~E-1)
+    st로 다시 입력 받아 토큰으로 나눈다.
+    int a,b,w를 정의한다.
+
+    list[a].add(new Node(b, w))
+    list[b].add(new Node(a, w)) // 그래프 생성 w: 가중치
+prim(1) // 프림 알고리즘 실행(1로 start)
+result 출력한다.
+
+// prim(int start)
+큐 queue를 생성한다.
+queue에 start, 0을 넣는다.
+while(큐가 비어있지 않는 동안)
+    Node q = queue.poll()
+    int node = q.to
+    int weight = q.weight
+    if(visited[node]) continue // 간선의 정점으로부터 가장 낮은 가중치 정점 고른다.
+    visited[node] = true
+    result += weight // 결과에 가중치 더한다
+    for 반복문으로 다음을 반복한다. (Node next : list[node])
+        if(!visited[next.to])
+            큐에 next를 넣는다.
