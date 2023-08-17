@@ -1,0 +1,54 @@
+1. 문제 해결 기법
+    - n개의 별을 이어서 별자리를 만드는 데 드는 최소 비용을 구하는 문제이다. x,y 좌표가 실수 형태로 주어지고, 
+    최대 소수점 둘째자리까지 주어진다. 2차원 평면에 별을 놓는 것을 그래프에 넣는다고 생각하면 이 문제는 크루스칼 
+    알고리즘을 사용하여 가중치의 합을 구하고 최소 비용을 구할 수 있다. // 최소 스패닝 트리 문제
+
+2. 논리 구현
+// Star <- 별 좌표
+double x,y, int num 
+// public Star
+거리를 구한 좌표 표시 : Edge 클래스
+int start,end, double weight //가중치
+// public Edge
+@Override
+public int compareTo(Edge o)    // 객체 간 순서 비교
+    if(weight < 0.weight) return -1
+    return 1
+public static int[] star 생성
+public static PriorityQueue<Edge> graph 생성
+// main
+Scanner sc 선언한다.
+int n을 입력받는다.
+Star[] stars의 크기를 n으로 설정한다.
+for 반복문으로 다음을 반복한다. (int i <- 0~n-1)    // 모든 간선을 계산
+    double x,y를 sc.nextDouble로 입력받는다.
+    stars[i]에 Star(x, y, i)를 넣는다.
+graph를 새로운 우선 순위 큐로 정의한다.
+star를 크기 n+1로 생성한다.
+for 반복문으로 다음을 반복한다.(int i <- 0~n-1)
+    star[i] = i
+for 반복문으로 다음을 반복한다. (int i <- 0~n-1)
+    for 반복문으로 다음을 반복한다. (int j <- i+1~n-1)
+        double temp를 dist(stars[i], stars[j])  // 별 좌표
+        graph에 Edge(stars[i].num, stars[j].num, temp)를 넣는다. // offer 사용
+double result = 0, int cnt = 0
+while(그래프가 비어있지 않는 동안)
+    Edge edge를 그래프를 빼는 것으로 정의한다.
+    if(find사용, 시작점이 끝점과 같지 않다면)
+        start,end로 union 실행
+        cnt의 값을 1 증가한다.
+        result 에 가중치를 더한다.
+    if(cnt == n)
+        break // n까지 전부 돌았다면 break
+System.out.printf(result를 소수점 둘째자리까지 출력)
+// double dist (Star s1, Star s2)
+    두 점 사이의 거리를 구하는 로직을 구현한다.
+// union
+x = find(x), y = find(y)
+if(x와 y가 다르다면)
+    star[y] = x
+// find
+    if(a가 star[a]와 같다면)
+        return a
+    else 
+        star[a] = find(star[a])
