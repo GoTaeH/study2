@@ -1,0 +1,41 @@
+1. 문제 해결 기법
+    - N개의 도시가 있고, 도시끼리 이동하는 버스 M대가 있다. 버스는 각각 A(시작도시), B(도착도시), 
+    C(이동하는 데 걸리는 시간)으로 나타낸다. C가 양수가 아닌 0(순간이동), 음수(타임머신으로 과거로 돌아가는 경우) 
+    가 있을 수 있다. 이때 1번 도시에서 나머지 도시로 가는 가장 빠른 시간을 구하는 문제이다. 이는 음수 가중치가 있을 수 
+    있는 문제이므로 벨만 포드를 사용하여 해결해야 한다.
+
+2. 논리 구현
+// Bus
+int start, end, weight // 시작, 도착, 가중치
+static int N, M // 도시 개수, 버스 노선 개수
+static final int INF = 100000000    // 무한대, 해당 경로 없음
+static ArrayList<Bus> bus를 선언한다.
+static long[] dist를 선언한다.
+// boolean bellman() <- 벨만 포드 알고리즘
+boolean cycle = false 
+dist[1] = 0 // 시작점 최단거리를 0으로 갱신한다.
+for 반복문으로 다음을 반복한다. (int i <- 0~N)
+    for 반복문으로 다음을 반복한다. (int j <- 0~M-1)
+        int s,e,w를 각각 bus.j의start, end, weight로 정의한다.
+        if(목적지까지 최단 경로가 시작점 최단 경로+목적지까지의 가중치보다 클 때)
+            dist[e] = dist[s] + w // e의 최단 경로 = s 경로 + 가중치
+            if(i가 N이라면) cycle = true
+return cycle
+// main
+버퍼리더 br을 선언한다.
+StringTokenizer st를 선언하여 입력받은 것을 토큰화한다.
+N 정의한다. // 도시 수
+M 정의한다. // 버스 수
+dist의 크기를 N + 1로 선언한다.
+배열 dist를 INF로 초기화한다. // Arrays.fill
+for 반복문으로 다음을 반복한다. (int i <- 0~M-1)
+    st 재선언
+    int A,B,C 정의
+    bus에 A,B,C를 넣는다. 
+StringBuilder sb를 선언한다.
+if(bellman())   // 경로가 없다면
+    sb.append(-1 + "\n")    //-1 반환
+else
+    for(int i <- 2~N)
+        sb.append(dist[i] == INF ? -1 : dist[i]) // 음의 cycle 없는 경우
+sb를 출력한다.
