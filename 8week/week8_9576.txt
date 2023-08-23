@@ -1,0 +1,41 @@
+1. 문제 해결 기법
+    - 나눠줄 책 N권을 학생 M명에게 책을 나눠주는데 M명 각각에게 a,b를 받아 책 번호 a 이상 b 이하인 
+    책 중 남아있는 책 한 권을 골라 주는 방식으로 책을 나눠준다. (a이상 b이하의 책이 없다면 주지 않는다.) 
+    책을 나눠줄 수 있는 최대 학생 수를 구하는 문제이다. 이는 a, b를 활용하여 이분 매칭을 통해 최대 매칭 수를 
+    구하는 것으로 구현할 수 있다. // 한 학생이 어떤 책을 나눔 받았다면 다른 학생은 그 책을 받을 수 없다.
+
+2. 논리 구현
+static int N, M을 선언한다.
+static int[] book을 선언한다. // 책 번호 넣을 배열
+static student[] students를 선언하고 class student를 정의한다. (int a, b)
+static boolean[] visited를 선언한다.
+// main
+버퍼리더 br을 선언한다.
+StringBuilder sb를 선언한다.
+int T를 입력받는다. // 테스트 케이스 수 T
+
+while(T가 0보다 큰 동안에)
+    StringTokenizer st를 선언하여 입력받은 것을 토큰화한다.
+    책 수 N과 학생 수 M을 정의한다.
+    book을 크기 N + 1 로 정의한다.
+    students를 크기 M+1로 정의한다.
+    visited를 크기 N+1로 정의한다.
+    
+    for(int i <- 1~M) // 학생 수 만큼 반복
+        st로 다시 입력 받아 토큰화한다.
+        int a,b를 토큰으로 정의한다. 
+        students[i] = new student(a, b) // a 이상 b 이하
+    int result = 0 // 결과를 0으로 초기화
+    for(int i <- 1~M)
+        visited 배열을 false로 채운다.
+        if(dfs(i)) result++     // 책을 준 학생 수
+    sb.append(result + "\n")
+sb를 출력한다.
+// boolean dfs(int next)
+    for(int b <- student[next].a~student[next].b)   // a부터 b가 될때까지
+        if(visited[b]) continue
+        visited[b] = true   // 방문 완료
+        if(book[b]가 0이거나 dfs(book[b])이면) 
+            book[b] = next  // 다음으로 넘어간다
+            return true
+    return false
