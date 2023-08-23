@@ -1,0 +1,42 @@
+1. 문제 해결 기법
+    - M X N 크기의 모눈종이에 K개의 직사각형을 그릴 때, K개를 제외한 나머지 부분이 몇 개의 
+    분리된 영역으로 나누어지는지, 나누어진 영역의 각 넓이는 얼마인지 구하는 문제이다. 이는 
+    직사각형 좌표를 이동하며 그려진 직사각형은 배열에 1을 입력하여 0이라면 dfs를 실행하도록 
+    만들어 해결할 수 있다. 즉 이 문제는 dfs를 사용하는 문제이다.
+
+2. 논리 구현
+static int dx[]의 상하좌우를 초기화 한다. {0, 0, 1, -1}
+static int dy[]의 상하좌우를 초기화 한다. {1, -1, 0, 0}
+static int M, N, K, cnt=0, int[][] graph, ArrayList<Integer> list를 선언한다.
+// main
+버퍼리더 br을 선언한다.
+StringTokenizer st를 사용하여 입력받은 것을 토큰화한다.
+M, N, K를 토큰으로 정의한다.
+graph의 크기를 MXN으로 정의한다.
+
+for(int i <- 0~K-1) // 직사각형 영역을 1로 표시
+    st로 다시 읽는다.
+    int x1, y1, x2, y2를 정의한다.
+    for(int x <- y1~y2-1)
+        for(int y <- x1~x2-1)
+            graph[x][y] = 1
+list를 ArrayList<Integer>()로 선언한다. // 영역의 넓이 저장하는 list
+for(int i <- 0~M-1)
+    for(int j <- 0~N-1)
+        if(graph[i][j] == 0)    // 0이라면 직사각형이 그려지지 않은 나머지 부분이다.
+            cnt = 0으로 초기화
+            dfs(i,j)
+            list에 cnt를 더한다.
+list.size()를 출력한다. // 직사각형 개수
+정렬방법인 Collections.sort를 사용해서 list를 오름차순 정렬한다.
+for(Integer i : list)
+    i + " "를 출력한다. // 직사각형의 각각의 영역 넓이
+
+// dfs(int x, int y)
+graph[x][y] = 1 
+cnt++
+for(int i <- 0~3) // 상하좌우
+    int nx,ny를 정의한다. // x+dx[i], y+dy[i]
+    if(nx,ny가 0보다 크거나 같고, nx,ny가 각각 M,N보다 작다면)
+        if(graph[nx][ny] == 0) // 0이면 dfs 재실행
+            dfs(nx, ny)
