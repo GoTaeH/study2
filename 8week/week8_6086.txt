@@ -1,0 +1,41 @@
+1. 문제 해결 기법
+    - 우물(A)에서 외양간(Z)을 잇는 N개의 배수관의 지도를 만드려고 하는데, 그 배수관들의  최대 유량을 구하는 
+    문제이다. 두 개의 배수관이 한줄로 연결되어 있을 때 두 관의 유량 중 최솟값으로 흐르며, 병렬로 연결되어 
+    있다면 각 용량의 합만큼, 연결되어 있지 않다면 제거 된다는 조건이 있다. 또한, 배수관은 양방향으로 흐른다는 
+    조건이 있다. 이런 최대 유량 문제는 포드-풀커슨 알고리즘을 사용하여 해결할 수 있다. 
+
+2. 논리 구현
+int 타입의 2차원 배열 pipe, flow를 생성한다.
+pipe이름 A~Z / a~z를 정수로 변환하는 함수를 생성한다. // pipeName
+// main
+버퍼리더 br을 선언한다.
+StringTokenizer st를 선언하고 br.readLine()으로 입력받는다.
+pipe와 flow를 52*52크기로 선언한다.    // 알파벳 개수 26+26=52
+int N을 토큰으로 정의한다.  // 파이프 정보 개수
+for(int i <- 0~N-1)
+    st로 다시 입력받는다.
+    int start,end,weight를 입력받은 것으로 정의한다. // start,end는 파이프 이름이고, weight는 용량이다.
+    start와 end를 연결시키고 용량을 더해 그래프 형태로 만든다.
+int total, source, sink를 정의하고, sink는 25, 나머지는 0으로 초기화한다.
+while(true)
+    int타입의 1차원 배열 parent를 크기 52로 정의한다.
+    우선순위 큐인 queue를 선언한다.
+    for(int i <- 0~51)
+        parent[i] = -1
+    parent[source] = source
+    queue.add(source)
+    while(queue가 비어있지 않으면서 parent[sink]가 -1이라면)
+        int a = queue.poll()
+        for(int b <- 0~51)  // 두개의 다른 노드 a,b
+            if(pipe[a][b] - flow[a][b]가 0보다 크고, parent[b]가 -1이라면)
+                queue.add(b)
+                parent[b] = a
+    if(parent[sink] 가 -1이라면) break  // 증가 경로 없다면 break
+    int amount = Integer.MAX_VALUE // 최대 유량 저장
+    for(int i <- sink, source가 아닐때까지 반복, i = parent[i])
+        amount = Math.min(pipe[parent[i]][i] - flow[parent[i]][i], amount)  // 유량 결정
+    for(int i <- sink, source가 아닐때까지 반복, i = parent[i]) // 경로 통해 유량 보내기
+        flow[parent[i]][i] += amount
+        flow[i][parent[i]] -= amount
+    total에 유량을 더한다. // total += amount
+total을 출력한다.
